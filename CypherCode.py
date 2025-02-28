@@ -1,5 +1,4 @@
-
-
+"""Class to practice simple operations -by creating cypher coder and decoder with tests"""
 def encrypt(originalText, shift):
     result = ""
     for char in originalText:
