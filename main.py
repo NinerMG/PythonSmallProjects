@@ -1,5 +1,7 @@
 import random
 
+import HigherLoverGame
+
 
 def main():
    evenNumber()
@@ -35,7 +37,8 @@ def evenNumber():
 
 
 if __name__ == '__main__':
-    main()
+  HigherLoverGame.play_round()
+
 
 
 

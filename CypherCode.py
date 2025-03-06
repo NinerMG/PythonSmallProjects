@@ -1,3 +1,4 @@
+import pytest
 """Class to practice simple operations -by creating cypher coder and decoder with tests"""
 def encrypt(originalText, shift):
     result = ""
@@ -27,7 +28,7 @@ def test_case_sensitivity():
     assert encrypt("Hello", 5) == "Mjqqt"
     assert decrypt("Mjqqt", 5) == "Hello"
 
-def test_case_sensitivity():
+def test_case_sensitivity2():
     assert encrypt("Hello", 5) == "Mjqqt"
     assert decrypt("Mjqqt", 5) == "Hello"
 
