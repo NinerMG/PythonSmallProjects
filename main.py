@@ -1,6 +1,8 @@
 import random
+from prettytable import PrettyTable
+import turtle
 
-import HigherLoverGame
+import CoffeeMachine
 
 
 def main():
@@ -37,9 +39,4 @@ def evenNumber():
 
 
 if __name__ == '__main__':
-  HigherLoverGame.play_round()
-
-
-
-
-
+  CoffeeMachine.coffee_machine()
