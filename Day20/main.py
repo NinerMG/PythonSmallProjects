@@ -7,11 +7,20 @@
 # Krok 5 liczenie punktów
 # Krok 6 wykrycie kolizji ze ścianą
 # Krok 7 wykrycie kolizji ze sobą
+# dziedziczenie klas
+# słowo kluczowe super
+# nadpisywanie metod klasy bazowej
 
 
-from turtle import Turtle, Screen
+from turtle import Screen
+
+from Day20.scoreboard import Scoreboard
 from snake import Snake
+from food import  Food
+from scoreboard import Scoreboard
 import time
+
+
 screen = Screen()
 screen.setup(width=600, height=600)
 screen.bgcolor("black")
@@ -19,6 +28,8 @@ screen.title("Snake Game")
 screen.tracer(0)
 
 snake = Snake()
+food = Food()
+scoreboard = Scoreboard()
 
 screen.listen()
 screen.onkey(snake.up,"Up")
@@ -31,8 +42,31 @@ game_is_on = True
 while game_is_on:
     screen.update()
     time.sleep(0.1)
-
     snake.move()
+
+    #Detect colision with food - distance function
+    # creating scoreboard, turtle metoda write oraz metoda clear
+    if snake.head.distance(food) < 15:
+        food.refresh()
+        snake.extend()
+        scoreboard.increse_score()
+
+    #Detect colision with wall
+    if snake.head.xcor() > 280 or snake.head.xcor() < -280 or snake.head.ycor() > 280 or snake.head.ycor() < -280:
+        game_is_on = False
+        scoreboard.game_over()
+
+    #Detect colision with snake tail
+    # if head collides with any segment in the tail:
+        #trigger game over
+
+    for segment in snake.segments[1:]:
+        if snake.head.distance(segment) < 10:
+            game_is_on = False
+            scoreboard.game_over()
+
+#Slicing in Python -> co to jest i czemu warto stosowac, przykłady (też te ze stepem)
+
 
 
 screen.exitonclick()

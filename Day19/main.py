@@ -4,6 +4,7 @@ from turtle import Turtle, Screen
 # przekazywanie funkcji do paramterów funkcji
 #funkcja wyższego rzędu
 
+
 tim = Turtle()
 screen = Screen()
 
