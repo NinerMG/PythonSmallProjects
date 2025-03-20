@@ -1,6 +1,5 @@
 import random
 from prettytable import PrettyTable
-import turtle
 
 import CoffeeMachine
 
