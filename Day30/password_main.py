@@ -59,7 +59,7 @@ def save():
             data.update(new_data)
 
             with open("data.json", "w") as data_file:
-                json.dump(new_data, data_file, indent=4)
+                json.dump(data, data_file, indent=4)
 
         finally:
                 website_entry.delete(0, END)
