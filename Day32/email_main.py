@@ -8,8 +8,19 @@ import smtplib
 my_email = "appbreweryinfo@gmail.com"
 password = "abc1234()"
 
-connection = smtplib.SMTP("smtp.gmail.com")
-connection.starttls()
-connection.login(user=my_email, password=password)
-connection.sendmail(from_addr=my_email, to_addrs="appbrewerytesting@yahoo.com", msg="Hello")
-connection.close()
+# connection = smtplib.SMTP("smtp.gmail.com")
+# connection.starttls()
+# connection.login(user=my_email, password=password)
+# connection.sendmail(from_addr=my_email,
+#                     to_addrs="appbrewerytesting@yahoo.com",
+#                     msg="Hello\n\nThis is boyd of my email.")
+# connection.close()
+
+
+with smtplib.SMTP("smtp.gmail.com") as connection:
+    connection.starttls()
+    connection.login(user=my_email, password=password)
+    connection.sendmail(from_addr=my_email,
+                         to_addrs="appbrewerytesting@yahoo.com",
+                         msg="Hello\n\nThis is boyd of my email."
+                        )
