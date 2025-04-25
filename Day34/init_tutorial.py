@@ -3,3 +3,8 @@
 # https://opentdb.com/
 
 # problem z HTML entities -> docode html using python (np. html.unescape)
+
+# declaring datatype
+# age : int
+# age = "twele"
+age = 12
