@@ -1,15 +1,15 @@
 import requests
 from datetime import datetime
 
-API_KEY =""
-APP_ID = ""
+API_KEY ="585aca7f8207e28457dcc218470ab448"
+APP_ID = "55e46560"
 
 user_exercise = input("Enter exercise and duration\n")
 today_date = datetime.now().strftime("%d/%m/%Y")
 now_time = datetime.now().strftime("%X")
 
-exercise_endpoint = ""
-sheet_endpoint = ""
+exercise_endpoint = "https://trackapi.nutritionix.com/v2/natural/exercise"
+sheet_endpoint = "https://api.sheety.co/6bbf5e5da8baa33e97bf83894678fb1d/myWorkouts/arkusz1"
 # Nutrition API CALL
 
 headers = {
