@@ -8,8 +8,8 @@ class FlightSearch:
     #This class is responsible for talking to the Flight Search API.
 
     def __init__(self):
-        self.api_key = "GVCujPc2rxMLpMDVWGvCIYbAEbiQGiP0"
-        self.api_secret = "WEYlLUfG59JmAwyB"
+        self.api_key = "31PT30EGaU0wmoWCo8nhXLGU0CH3lTqc"
+        self.api_secret = "yA3Ob9WgKcDV25FJ"
         self.token = self.get_new_token()
 
     def get_destination_code(self, city_name):
@@ -52,25 +52,7 @@ class FlightSearch:
         print(f"Your token expires in {response.json()['expires_in']} seconds")
         return response.json()['access_token']
 
-    def check_flights(self, origin_city_code, destination_city_code, from_time, to_time):
-        """
-        Searches for flight options between two cities on specified departure and return dates
-        using the Amadeus API.
-        Parameters:
-            origin_city_code (str): The IATA code of the departure city.
-            destination_city_code (str): The IATA code of the destination city.
-            from_time (datetime): The departure date.
-            to_time (datetime): The return date.
-        Returns:
-            dict or None: A dictionary containing flight offer data if the query is successful; None
-            if there is an error.
-        The function constructs a query with the flight search parameters and sends a GET request to
-        the API. It handles the response, checking the status code and parsing the JSON data if the
-        request is successful. If the response status code is not 200, it logs an error message and
-        provides a link to the API documentation for status code details.
-        """
-
-        # print(f"Using this token to check_flights() {self._token}")
+    def check_flights(self, origin_city_code, destination_city_code, from_time, to_time, is_direct=True):
         headers = {"Authorization": f"Bearer {self.token}"}
         query = {
             "originLocationCode": origin_city_code,
@@ -78,8 +60,8 @@ class FlightSearch:
             "departureDate": from_time.strftime("%Y-%m-%d"),
             "returnDate": to_time.strftime("%Y-%m-%d"),
             "adults": 1,
-            "nonStop": "true",
-            "currencyCode": "GBP",
+            "nonStop": "true" if is_direct else "false",
+            "currencyCode": "PLN",
             "max": "10",
         }
 
