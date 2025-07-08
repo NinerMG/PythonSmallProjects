@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for
-
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+from sqlalchemy import Integer, String, Float
 '''
 Red underlines? Install the required packages first: 
 Open the Terminal in PyCharm (bottom left). 
@@ -20,7 +22,7 @@ all_books = []
 
 @app.route('/')
 def home():
-    return render_template("index.html")
+    return render_template("index.html", books=all_books)
 
 
 @app.route("/add", methods=["GET", "POST"])
@@ -29,7 +31,7 @@ def add():
         new_book = {
             "title": request.form["title"],
             "author": request.form["author"],
-            "rating": request.form["raring"]
+            "rating": request.form["rating"]
         }
         all_books.append(new_book)
         return redirect(url_for('home'))
