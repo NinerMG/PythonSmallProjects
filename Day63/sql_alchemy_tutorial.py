@@ -10,7 +10,7 @@ app = Flask(__name__)
 class Base(DeclarativeBase):
     pass
 
-app.config['SQLALCHEMY_DATABASE_URL'] = "sqlite:///new-books-collection.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///books.db"
 
 # Create the extension
 db = SQLAlchemy(model_class=Base)
@@ -51,7 +51,7 @@ with app.app_context():
 
 # Update A Particular Record By Query
 with app.app_context():
-    book_to_update = db.session.execute(db.select(Book).where(Book.title == "Harry Potter")).scarar()
+    book_to_update = db.session.execute(db.select(Book).where(Book.title == "Harry Potter")).scalar()
     book_to_update.title = "Harry Potter and the Chamber of Secrets"
     db.session.commit()
 
