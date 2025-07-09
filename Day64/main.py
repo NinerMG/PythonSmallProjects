@@ -20,6 +20,11 @@ pip3 install -r requirements.txt
 
 This will install the packages from requirements.txt for this project.
 '''
+MOVIE_DB_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
+MOVIE_DB_API_KEY = "b195307878cd1146970d9bebfef4e3e8"
+MOVIE_DB_INFO_URL = "https://api.themoviedb.org/3/movie"
+MOVIE_DB_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
@@ -85,8 +90,13 @@ with app.app_context():
 
 @app.route("/")
 def home():
-    result = db.session.execute(db.select(Movie))
-    all_movies = result.scalars().all()
+    result = db.session.execute(db.select(Movie).order_by(Movie.rating))
+    all_movies = result.scalars().all()  # convert ScalarResult to Python List
+
+    for i in range(len(all_movies)):
+        all_movies[i].ranking = len(all_movies) - i
+    db.session.commit()
+
     return render_template("index.html", movies=all_movies)
 
 @app.route("/edit", methods=["GET", "POST"])
@@ -130,5 +140,22 @@ def add():
 
     return render_template("add.html", form=form)
 
+@app.route("/find")
+def find_movie():
+    movie_api_id = request.args.get("id")
+    if movie_api_id:
+        movie_api_url = f"{MOVIE_DB_INFO_URL}/{movie_api_id}"
+        response = requests.get(movie_api_url, params={"api_key": MOVIE_DB_API_KEY, "language": "en-US"})
+        data = response.json()
+        new_movie = Movie(
+            title=data["title"],
+            # The data in release_date includes month and day, we will want to get rid of.
+            year=data["release_date"].split("-")[0],
+            img_url=f"{MOVIE_DB_IMAGE_URL}{data['poster_path']}",
+            description=data["overview"]
+        )
+        db.session.add(new_movie)
+        db.session.commit()
+        return redirect(url_for("home"))
 if __name__ == '__main__':
     app.run(debug=True)
