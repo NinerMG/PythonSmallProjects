@@ -53,6 +53,9 @@ class RateMovieForm(FlaskForm):
     review = StringField("Your Review")
     submit = SubmitField("Done")
 
+class FindMovieForm(FlaskForm):
+    title = StringField("Movie Title", validators=[DataRequired()])
+    submit = SubmitField("Add Movie")
 
 ## After adding the new_movie the code needs to be commented out/deleted.
 ## So you are not trying to add the same movie twice. The db will reject non-unique movie titles.
@@ -105,6 +108,27 @@ def delete():
     db.session.delete(movie_to_delete)
     db.session.commit()
     return redirect(url_for('home'))
+
+@app.route("/add", methods=["GET", "POST"])
+def add():
+    # if request.method == "POST":
+    #     new_movie = Movie(
+    #         title = request.form["title"]
+    #     )
+    #     db.session.add(new_movie)
+    #     db.session.commit()
+
+        #return redirect(url_for('home'))
+
+    #return render_template("add.html")
+    form = FindMovieForm()
+    if form.validate_on_submit():
+        movie_title = form.title.data
+        response = requests.get(MOVIE_DB_SEARCH_URL, params={"api_key": MOVIE_DB_API_KEY, "query": movie_title})
+        data = response.json()["results"]
+        return render_template("select.html", options=data)
+
+    return render_template("add.html", form=form)
 
 if __name__ == '__main__':
     app.run(debug=True)
