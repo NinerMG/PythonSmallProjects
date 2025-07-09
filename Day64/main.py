@@ -75,7 +75,9 @@ with app.app_context():
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    result = db.session.execute(db.select(Movie))
+    all_movies = result.scalars().all()
+    return render_template("index.html", movies=all_movies)
 
 
 if __name__ == '__main__':
