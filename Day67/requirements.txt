@@ -6,3 +6,6 @@ Werkzeug==3.0.0
 Flask==2.3.2
 flask_sqlalchemy==3.1.1
 SQLAlchemy==2.0.25
+
+#  pip3 install -r requirements.txt
+# pip install --upgrade sqlalchemy flask_sqlalchemy
